@@ -6,16 +6,30 @@ import java.util.concurrent.BlockingQueue;
 public class Consumer implements Runnable{
 
 	protected BlockingQueue<Resultable> queue= new ArrayBlockingQueue<Resultable>(1000);
+	private volatile double highScore=-1000;
+	private Resultable resultfinal ;
 
-    public Consumer(BlockingQueue<Resultable> queue) {
+    public Resultable getResultfinal() {
+		return resultfinal;
+	}
+
+
+	public Consumer(BlockingQueue<Resultable> queue) {
         this.queue = queue;
     }
 
     public void run() {
-    	while(queue.isEmpty()){
+    	while(!queue.isEmpty()){
 			try {
 				Resultable r= queue.take();
-				System.out.println("1");
+				double score=r.getScore();
+				if(score>highScore){
+					highScore=score;
+					resultfinal=r;
+					
+				}
+				//System.out.println(r.getScore());
+				//System.out.println(r.getPlainText());
 				//if(r instanceof PoisinResult){
 				//	return;
 				//}
@@ -23,8 +37,10 @@ public class Consumer implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			//do something...........
+			
 		}
+    	
+    	
     }
 
 
