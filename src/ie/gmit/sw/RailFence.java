@@ -1,5 +1,6 @@
 package ie.gmit.sw;
 
+import java.util.Scanner;
 import java.util.concurrent.*;
 
 /* Basic implementation of the Rail Fence Cypher using a 2D char array 
@@ -125,27 +126,5 @@ public class RailFence {
 		}
 	}
 		
-	public static void main(String[] args) throws Exception{
-		String s = "THEYAREATTACKINGFROMTHENORTH";
-		String g=new RailFence().encrypt(s,5);
-		 
-		System.out.println(">" + s);
-		System.out.println(">" + g);
-		ExecutorService executor = Executors.newFixedThreadPool(s.length()/2);
-        
-        for(int i=0; i<s.length()/2; i++) {
-            executor.submit(new Decrypter(g,i));
-        }
-        
-        executor.shutdown();
-        
-        System.out.println("All tasks submitted.");
-        
-        try {
-            executor.awaitTermination(1, TimeUnit.DAYS);
-        } catch (InterruptedException e) {
-        }
-        
-        System.out.println("All tasks completed.");
-	}
+	
 }
