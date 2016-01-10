@@ -20,12 +20,12 @@ public class FileParser implements FileParseable {
 				// ADD EACH LINE TO THE PARSE
 				String [] stuff = next.split(" ");
 				//map.put(stuff[0]),stuff[1]);	
-				num1=(double) Long.parseLong(stuff[1]);
 				string1=stuff[0];
+				num1=(double) Long.parseLong(stuff[1]);			
 				temp.put(string1, num1);
 		}
 		return temp;
 		
-		
+		//"20202" 20202
 	}
 }

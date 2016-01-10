@@ -1,6 +1,5 @@
 package ie.gmit.sw;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class Decrypter implements Runnable {
@@ -22,7 +21,7 @@ public class Decrypter implements Runnable {
 		RailFence rf= new RailFence();
 		String plainText = rf.decrypt(cypherText, key);
 		//get the score 
-		
+		//System.out.println(plainText);
 		double score= TextScorer.getScore(plainText);
 
 		

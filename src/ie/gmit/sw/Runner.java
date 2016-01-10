@@ -1,48 +1,55 @@
 package ie.gmit.sw;
 
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Queue;
+import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class Runner {
 
 
 	public static void main(String[] args) throws Exception{
-		Decrypter d;
+		Scanner scan=new Scanner(System.in);
+		int j=0;
 		FileParseable p = new FileParser();
-		BlockingQueue<Resultable> queue= new ArrayBlockingQueue<Resultable>(1000);
 		Map<String, Double> temp = new ConcurrentHashMap<String, Double>();
 		Resultable resultfinal ;
-		
-		
+		int key;
+			
 		temp=p.parse("4grams.txt");
 		TextScorer tsr= new TextScorer(temp);
 
-		String s = "THEYAREATTACKINGFROMTHENORTH";
-		String g=new RailFence().encrypt(s,4);
+		String s ;
+		System.out.println("---------START------------");      
 		
-				 
-		//System.out.println(">" + s.length());
-		//System.out.println(">" + g);
+		System.out.println("Enter text:");
+		//s += "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG";
+		
+		s=scan.next();
+		s=s.toUpperCase();
+		
+		System.out.println("Enter key:");
+		key=scan.nextInt();
+		String g=new RailFence().encrypt(s,key);
+		System.out.print("encrypted text: ");
+		System.out.println(g);
+		BlockingQueue<Resultable> queue= new ArrayBlockingQueue<Resultable>(g.length());
+
 		ThreadEx.threadStarters(g,queue);
-        System.out.println("All tasks submitted.");
+        j=ThreadEx.getK();
         
-        
-        Consumer con= new Consumer(queue);
+        Consumer con= new Consumer(queue,j);
         Thread c= new Thread(con);
         c.start();
-  
-        
-        System.out.println("All tasks completed.");
         c.join();
         resultfinal=con.getResultfinal();
-        System.out.println(resultfinal.getPlainText());
+        System.out.println("\n");      
+        System.out.println("---------RESULT------------");
+        System.out.print("decrypted text\t: "+resultfinal.getPlainText()
+        		+"\n" +"Key\t\t: "+ resultfinal.getKey()
+        		+"\n" +"Score\t\t:"+ resultfinal.getScore());
+        
 	}
 
 

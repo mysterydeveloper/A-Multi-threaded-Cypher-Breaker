@@ -89,7 +89,7 @@
     <target name="docs" depends="archive">
         <javadoc sourcepath="${srcDir}" destdir="${docDir}" author="true" version="true" use="true" windowtitle="A Multi-threaded Cypher Breaker" >
             <doctitle><![CDATA[<h1>A Multi-threaded Cypher Breaker</h1>]]></doctitle>
-            <bottom><![CDATA[<i>Copyright &#169; 2015</i>]]></bottom>
+            <bottom><![CDATA[<i>Copyright &#169; 2016</i>]]></bottom>
         </javadoc>
     </target>
 	
